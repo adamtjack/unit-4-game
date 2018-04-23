@@ -4,7 +4,7 @@ body {
   }
   header {
     font-size: 50px;
-    text-align: center;
+    text-align: left;
     padding: 20px;
   }
   .characterWrapper {
@@ -25,10 +25,16 @@ body {
   #turn-counter {
     font-size: 150%;
   }
-  
-  /*---------------------*/
-  /* Character rendering */
-  /*---------------------*/
+  #character-section {
+    align-content: center;
+    padding: 50px;
+  }
+  #fight-section {
+    width: 300px;
+  }
+
+  /*Character*/
+
   .character {
     width: 153px;
     margin: 0px 80px 0px 40px;
@@ -56,9 +62,9 @@ body {
     color: yellow;
   }
   
-  /*---------------------*/
-  /*      Fighting       */
-  /*---------------------*/
+
+  /*Attack*/
+  
   .attack {
     text-align: center;
   }
@@ -71,6 +77,7 @@ body {
   .btn {
       background:black;
       color: yellow;	
+  
   }
   .enemy {
       width: 153px;
@@ -87,13 +94,12 @@ body {
       padding: 5px;
   }
   .target-enemy {
-    background-color: black;
     color: white;
   }
   
-  /*---------------------*/
-  /* Available Oponents  */
-  /*---------------------*/
+  
+  /*Opponents*/
+  
   #available-to-attack-section {
     float: right;
   }
@@ -101,14 +107,9 @@ body {
       height: 100px;
   }
   
-  /*---------------------*/
-  /*      Defender       */
-  /*---------------------*/
   
-  /*#defender {
-    width: 190px;
-    height: 160px;
-  }*/
+  /*Defender*/
+  
   #defender-name {
     text-align: center;
   }
@@ -120,9 +121,8 @@ body {
     text-align: center;
   }
   
-  /*---------------------*/
-  /*   Media Queries     */
-  /*---------------------*/
+ /*Media*/
+ 
   @media only screen and (max-device-width: 768px) {
     .character {
       display: block;

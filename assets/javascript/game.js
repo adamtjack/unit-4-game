@@ -1,40 +1,34 @@
-//Global variables
+
 $(document).ready(function() {
 
-    //audio clips
-    let audio = new Audio('assets/audio/imperial_march.mp3');
-    let force = new Audio('assets/audio/force.mp3');
-    let blaster = new Audio('assets/audio/blaster-firing.mp3');
-    let jediKnow = new Audio('assets/audio/jedi-know.mp3');
-    let lightsaber = new Audio('assets/audio/light-saber-on.mp3');
-    let rtwoo = new Audio('assets/audio/R2D2.mp3');
+    
     
     //Array of Playable Characters
     let characters = {
         'batman': {
             name: 'batman',
-            health: 120,
-            attack: 8,
+            health: 140,
+            attack: 10,
             imageUrl: "assets/images/lego-batman3.png",
             enemyAttackBack: 15
         }, 
         'robin': {
             name: 'robin',
-            health: 100,
-            attack: 14,
+            health: 120,
+            attack: 16,
             imageUrl: "assets/images/lego-robin.png",
-            enemyAttackBack: 5
+            enemyAttackBack: 10
         }, 
         'joker': {
             name: 'joker',
-            health: 150,
-            attack: 8,
+            health: 180,
+            attack: 10,
             imageUrl: "assets/images/lego-joker.png",
             enemyAttackBack: 20
         }, 
         'catwoman': {
             name: 'catwoman',
-            health: 180,
+            health: 160,
             attack: 7,
             imageUrl: "assets/images/lego-catwoman.png",
             enemyAttackBack: 20
@@ -51,16 +45,14 @@ $(document).ready(function() {
     
     
     var renderOne = function(character, renderArea, makeChar) {
-        //character: obj, renderArea: class/id, makeChar: string
+        
         var charDiv = $("<div class='character' data-name='" + character.name + "'>");
         var charName = $("<div class='character-name'>").text(character.name);
         var charImage = $("<img alt='image' class='character-image'>").attr("src", character.imageUrl);
         var charHealth = $("<div class='character-health'>").text(character.health);
         charDiv.append(charName).append(charImage).append(charHealth);
         $(renderArea).append(charDiv);
-        //Capitalizes the first letter in characters name
-        // $('.character').css('textTransform', 'capitalize');
-        // conditional render
+        
         if (makeChar == 'enemy') {
           $(charDiv).addClass('enemy');
         } else if (makeChar == 'defender') {
@@ -69,7 +61,7 @@ $(document).ready(function() {
         }
       };
     
-      // Create function to render game message to DOM
+      
       var renderMessage = function(message) {
         var gameMesageSet = $("#gameMessage");
         var newMessage = $("<div>").text(message);
@@ -81,7 +73,7 @@ $(document).ready(function() {
       };
     
       var renderCharacters = function(charObj, areaRender) {
-        //render all characters
+        //all characters
         if (areaRender == '#characters-section') {
           $(areaRender).empty();
           for (var key in charObj) {
@@ -90,24 +82,24 @@ $(document).ready(function() {
             }
           }
         }
-        //render player character
+        //player character
         if (areaRender == '#selected-character') {
           $('#selected-character').prepend("Your Character");       
           renderOne(charObj, areaRender, '');
           $('#attack-button').css('visibility', 'visible');
         }
-        //render combatants
+        //combatants
         if (areaRender == '#available-to-attack-section') {
             $('#available-to-attack-section').prepend("Choose Your Next Opponent");      
           for (var i = 0; i < charObj.length; i++) {
     
             renderOne(charObj[i], areaRender, 'enemy');
           }
-          //render one enemy to defender area
+          
           $(document).on('click', '.enemy', function() {
-            //select an combatant to fight
+            //select an enemy
             name = ($(this).data('name'));
-            //if defernder area is empty
+            //if area is empty
             if ($('#defender').children().length === 0) {
               renderCharacters(name, '#defender');
               $(this).hide();
@@ -115,38 +107,36 @@ $(document).ready(function() {
             }
           });
         }
-        //render defender
+        //defender appears
         if (areaRender == '#defender') {
           $(areaRender).empty();
           for (var i = 0; i < combatants.length; i++) {
-            //add enemy to defender area
+            //add enemy to area
             if (combatants[i].name == charObj) {
-              $('#defender').append("Your selected opponent")
+              $('#defender').append("Selected opponent")
               renderOne(combatants[i], areaRender, 'defender');
             }
           }
         }
-        //re-render defender when attacked
+        //defender when attacked
         if (areaRender == 'playerDamage') {
           $('#defender').empty();
-          $('#defender').append("Your selected opponent")
+          $('#defender').append("Selected opponent")
           renderOne(charObj, '#defender', 'defender');
-          lightsaber.play();
         }
-        //re-render player character when attacked
+        //character when attacked
         if (areaRender == 'enemyDamage') {
           $('#selected-character').empty();
           renderOne(charObj, '#selected-character', '');
         }
-        //render defeated enemy
+        //defeated enemy
         if (areaRender == 'enemyDefeated') {
           $('#defender').empty();
           var gameStateMessage = "You have defated " + charObj.name + ", you can choose to fight another enemy.";
           renderMessage(gameStateMessage);
-          blaster.play();
         }
       };
-      //this is to render all characters for user to choose their computer
+      
       renderCharacters(characters, '#characters-section');
       $(document).on('click', '.character', function() {
         name = $(this).data('name');
@@ -160,28 +150,27 @@ $(document).ready(function() {
           }
           $("#characters-section").hide();
           renderCharacters(currSelectedCharacter, '#selected-character');
-          //this is to render all characters for user to choose fight against
+          //choose character
           renderCharacters(combatants, '#available-to-attack-section');
         }
       });
     
-      // ----------------------------------------------------------------
-      // Create functions to enable actions between objects.
+      
       $("#attack-button").on("click", function() {
-        //if defernder area has enemy
+        //if enemy available
         if ($('#defender').children().length !== 0) {
-          //defender state change
+          
           var attackMessage = "You attacked " + currDefender.name + " for " + (currSelectedCharacter.attack * turnCounter) + " damage.";
           renderMessage("clearMessage");
-          //combat
+          //fight
           currDefender.health = currDefender.health - (currSelectedCharacter.attack * turnCounter);
     
-          //win condition
+          //if you win
           if (currDefender.health > 0) {
-            //enemy not dead keep playing
+            
             renderCharacters(currDefender, 'playerDamage');
-            //player state change
-            var counterAttackMessage = currDefender.name + " attacked you back for " + currDefender.enemyAttackBack + " damage.";
+            
+            var counterAttackMessage = currDefender.name + " attacked youfor " + currDefender.enemyAttackBack + " damage.";
             renderMessage(attackMessage);
             renderMessage(counterAttackMessage);
     
@@ -189,8 +178,7 @@ $(document).ready(function() {
             renderCharacters(currSelectedCharacter, 'enemyDamage');
             if (currSelectedCharacter.health <= 0) {
               renderMessage("clearMessage");
-              restartGame("You have been defeated...GAME OVER!!!");
-              force.play();
+              restartGame("OH NO, you lost! GAME OVER!!!");
               $("#attack-button").unbind("click");
             }
           } else {
@@ -199,11 +187,7 @@ $(document).ready(function() {
             if (killCount >= 3) {
               renderMessage("clearMessage");
               restartGame("You defeated all characters!!!! GAME OVER!!!");
-              jediKnow.play();
-              // The following line will play the imperial march:
-              setTimeout(function() {
-              audio.play();
-              }, 2000);
+              
     
             }
           }
@@ -211,7 +195,6 @@ $(document).ready(function() {
         } else {
           renderMessage("clearMessage");
           renderMessage("No enemy here.");
-          rtwoo.play();
         }
       });
     
