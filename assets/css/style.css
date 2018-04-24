@@ -54,12 +54,14 @@ body {
     text-transform: capitalize;
     line-height: 30px;
     font-family: Georgia, 'Times New Roman', Times, serif;
-    font-size: 20px;
+    font-size: 30px;
     color: yellow;
+    margin-top: 50px;
   }
   .character-health {
     text-align: center;
     color: yellow;
+    font-size: 25px;
   }
   
 

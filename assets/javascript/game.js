@@ -15,7 +15,7 @@ $(document).ready(function() {
         'robin': {
             name: 'robin',
             health: 120,
-            attack: 16,
+            attack: 14,
             imageUrl: "assets/images/lego-robin.png",
             enemyAttackBack: 10
         }, 
@@ -84,7 +84,7 @@ $(document).ready(function() {
         }
         //player character
         if (areaRender == '#selected-character') {
-          $('#selected-character').prepend("Your Character");       
+          $('#selected-character').prepend("");       
           renderOne(charObj, areaRender, '');
           $('#attack-button').css('visibility', 'visible');
         }
@@ -113,7 +113,7 @@ $(document).ready(function() {
           for (var i = 0; i < combatants.length; i++) {
             //add enemy to area
             if (combatants[i].name == charObj) {
-              $('#defender').append("Selected opponent")
+              $('#defender').append("")
               renderOne(combatants[i], areaRender, 'defender');
             }
           }
@@ -121,7 +121,7 @@ $(document).ready(function() {
         //defender when attacked
         if (areaRender == 'playerDamage') {
           $('#defender').empty();
-          $('#defender').append("Selected opponent")
+          $('#defender').append("")
           renderOne(charObj, '#defender', 'defender');
         }
         //character when attacked
@@ -198,9 +198,9 @@ $(document).ready(function() {
         }
       });
     
-    //Restarts the game - renders a reset button
+    //Restarts the game, reset button appears
       var restartGame = function(inputEndGame) {
-        //When 'Restart' button is clicked, reload the page.
+        //Reloads page upon button click.
         var restart = $('<button class="btn">Restart</button>').click(function() {
           location.reload();
         });
