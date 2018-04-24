@@ -88,7 +88,7 @@ $(document).ready(function() {
           renderOne(charObj, areaRender, '');
           $('#attack-button').css('visibility', 'visible');
         }
-        //combatants
+        //enemies
         if (areaRender == '#available-to-attack-section') {
             $('#available-to-attack-section').prepend("Choose Your Next Opponent");      
           for (var i = 0; i < charObj.length; i++) {

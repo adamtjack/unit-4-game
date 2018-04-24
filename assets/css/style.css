@@ -40,7 +40,7 @@ body {
     margin: 0px 80px 0px 40px;
     cursor: pointer;
     display: inline-block;
-    margin-left: 40px;
+    margin-center: auto;
   }
   .character img {
     border: 0 none;
